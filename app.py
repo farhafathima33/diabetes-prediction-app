@@ -1,6 +1,11 @@
 import streamlit as st
 import pickle
 import mysql.connector
+import os
+from dotenv import load_dotenv
+
+load_dotenv(override = True)
+
 
 
 # Load trained ML model
@@ -9,13 +14,19 @@ with open("diabetes_model.pkl", "rb") as f:
     model = pickle.load(f)
 
 # Database connection
+db_host = os.getenv("DB_HOST")
+db_user = os.getenv("DB_USER")
+db_password = os.getenv("DB_PASSWORD")
+db_name = os.getenv("DB_NAME")
+db_port = os.getenv("DB_PORT")
 
 def get_connection():
     return mysql.connector.connect(
-        host="localhost",
-        user="farha",
-        password="farha123",          # add password if you set one
-        database="diabatese_db"
+        host= db_host,
+        user= db_user,
+        password= db_password,
+        database= db_name,
+        port= db_port 
     )
 
 
